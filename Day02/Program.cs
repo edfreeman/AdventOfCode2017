@@ -13,16 +13,16 @@ namespace Day02
         static void Main(string[] args)
         {
             //Part 1
-            string exampleInputPath = @"C:\Users\EdFreeman\Documents\endjin\Training\AdventOfCode\Day2ExampleInput.txt";
+            string exampleInputPath = @"C:\Users\EdFreeman\Documents\endjin\Training\AdventOfCode\Day02\Day2ExampleInput.txt";
             Debug.Assert(SolveChecksumDay2Part1(exampleInputPath, ' ') == 18);
 
-            string actualInputPath = @"C:\Users\EdFreeman\Documents\endjin\Training\AdventOfCode\Day2ActualInput.txt"; //answer is 44670
+            string actualInputPath = @"C:\Users\EdFreeman\Documents\endjin\Training\AdventOfCode\Day02\Day2ActualInput.txt"; //answer is 44670
             Console.WriteLine(SolveChecksumDay2Part1(actualInputPath));
 
 
             //Part 2 
             
-            string exampleInputPath2 = @"C:\Users\EdFreeman\Documents\endjin\Training\AdventOfCode\Day2Part2ExampleInput.txt";
+            string exampleInputPath2 = @"C:\Users\EdFreeman\Documents\endjin\Training\AdventOfCode\Day02\Day2Part2ExampleInput.txt";
             Debug.Assert(SolveChecksumDay2Part2(exampleInputPath2, ' ') == 9);
 
             Console.WriteLine(SolveChecksumDay2Part2(actualInputPath));
@@ -99,32 +99,51 @@ namespace Day02
             return sum;
         }
 
-        private static int CalculateChecksum(int[][] jaggedArray)
+        //private static int CalculateChecksum(int[][] jaggedArray)
+        //{
+        //    int sum = 0;
+            
+        //    foreach (var subArray in jaggedArray)
+        //    {
+        //        int minValue = subArray.Min();
+        //        int maxValue = subArray.Max();
+        //        sum += (maxValue - minValue);
+        //    }
+
+        //    return sum;
+        //}
+
+        //private static int CalculateChecksum(List<List<int>> listOfLists)
+        //{
+        //    int sum = 0;
+            
+        //    foreach(var list in listOfLists)
+        //    {
+        //        int minValue = list.Min();
+        //        int maxValue = list.Max();
+        //        sum += (maxValue - minValue);
+        //    }
+
+        //    return sum;
+        //}
+
+        private static int CalculateChecksumWithoutLinq(IEnumerable<IEnumerable<int>> rows)
         {
             int sum = 0;
-            
-            foreach (var subArray in jaggedArray)
+
+            foreach (var row in rows)
             {
-                int minValue = subArray.Min();
-                int maxValue = subArray.Max();
+                int minValue = row.Min();
+                int maxValue = row.Max();
                 sum += (maxValue - minValue);
             }
 
             return sum;
         }
 
-        private static int CalculateChecksum(List<List<int>> listOfLists)
+        private static int CalculateChecksum(IEnumerable<IEnumerable<int>> rows)
         {
-            int sum = 0;
-            
-            foreach(var list in listOfLists)
-            {
-                int minValue = list.Min();
-                int maxValue = list.Max();
-                sum += (maxValue - minValue);
-            }
-
-            return sum;
+            return rows.Sum(row => row.Max() - row.Min());
         }
 
         private static int[][] ParseAsJaggedArray(string path, char delimiter)
